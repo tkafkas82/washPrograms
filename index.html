@@ -1,0 +1,565 @@
+<!doctype html>
+<html lang="el">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0A7C89">
+<style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Τι πρόγραμμα να βάλω;</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Commissioner:wght@300;400;500;600;800&family=Fira+Sans+Condensed:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --ground:#EFF1F0;
+    --surface:#FFFFFF;
+    --surface-2:#F7F8F7;
+    --line:#D8DDDC;
+    --line-soft:#E6EAE9;
+    --ink:#14181B;
+    --ink-2:#3C464B;
+    --muted:#66727A;
+    --accent:#0A7C89;
+    --accent-soft:#DCEFF1;
+    --heat:#B94E1B;
+    --heat-soft:#F6E5DA;
+    --panel:#12171A;
+    --panel-2:#1B2226;
+    --panel-line:#2C363B;
+    --panel-ink:#EAEFEF;
+    --panel-muted:#8D9BA1;
+    --readout:#54DAE6;
+    --shadow:0 1px 2px rgba(20,24,27,.06), 0 8px 24px -16px rgba(20,24,27,.28);
+    --radius:14px;
+    color-scheme:light dark;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#0E1215;
+      --surface:#161C20;
+      --surface-2:#1B2226;
+      --line:#2A343A;
+      --line-soft:#222B30;
+      --ink:#E9EEEE;
+      --ink-2:#C0CACD;
+      --muted:#8B989E;
+      --accent:#3FBFCC;
+      --accent-soft:#12333A;
+      --heat:#E08050;
+      --heat-soft:#39241A;
+      --panel:#0A0E10;
+      --panel-2:#141A1D;
+      --panel-line:#242E33;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -18px rgba(0,0,0,.8);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0E1215;
+    --surface:#161C20;
+    --surface-2:#1B2226;
+    --line:#2A343A;
+    --line-soft:#222B30;
+    --ink:#E9EEEE;
+    --ink-2:#C0CACD;
+    --muted:#8B989E;
+    --accent:#3FBFCC;
+    --accent-soft:#12333A;
+    --heat:#E08050;
+    --heat-soft:#39241A;
+    --panel:#0A0E10;
+    --panel-2:#141A1D;
+    --panel-line:#242E33;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -18px rgba(0,0,0,.8);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--ground);
+    color:var(--ink);
+    font-family:"Commissioner","Segoe UI",system-ui,sans-serif;
+    font-size:16px;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:28px 18px 64px}
+  .label{
+    font-family:"Fira Sans Condensed","Segoe UI",system-ui,sans-serif;
+    text-transform:uppercase;
+    letter-spacing:.14em;
+    font-size:12px;
+    font-weight:600;
+  }
+
+  /* ---- header ---- */
+  header{display:flex;flex-direction:column;gap:10px;margin-bottom:26px}
+  .eyebrow{color:var(--accent);display:flex;align-items:center;gap:8px}
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);flex:none}
+  h1{
+    font-size:clamp(28px,7vw,40px);
+    line-height:1.06;
+    letter-spacing:-.02em;
+    font-weight:800;
+    margin:0;
+    text-wrap:balance;
+  }
+  .sub{margin:0;color:var(--muted);max-width:46ch;font-weight:300}
+
+  /* ---- step 1: picker ---- */
+  .step{display:flex;align-items:baseline;gap:10px;margin:0 0 12px}
+  .step .n{
+    font-family:"Fira Sans Condensed",system-ui,sans-serif;
+    font-size:12px;font-weight:600;letter-spacing:.08em;
+    color:var(--surface);background:var(--ink);
+    border-radius:20px;padding:2px 9px;flex:none;
+  }
+  .step h2{margin:0;font-size:17px;font-weight:600;letter-spacing:-.01em}
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(186px,1fr));
+    gap:10px;
+  }
+  .card{
+    appearance:none;
+    text-align:left;
+    font:inherit;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:14px 13px 13px;
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+    cursor:pointer;
+    transition:border-color .16s ease, transform .16s ease, box-shadow .16s ease;
+  }
+  .card:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow)}
+  .card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .card[aria-pressed="true"]{
+    border-color:var(--accent);
+    background:var(--accent-soft);
+    box-shadow:inset 0 0 0 1px var(--accent);
+  }
+  .card svg{width:26px;height:26px;color:var(--accent);flex:none}
+  .card .name{font-weight:600;font-size:15px;line-height:1.25;letter-spacing:-.01em}
+  .card .ex{font-size:12.5px;color:var(--muted);line-height:1.35;font-weight:300}
+
+  /* ---- readout panel ---- */
+  .answer{margin-top:26px}
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--panel-line);
+    border-radius:18px;
+    color:var(--panel-ink);
+    overflow:hidden;
+  }
+  .panel-top{
+    padding:18px 18px 16px;
+    border-bottom:1px solid var(--panel-line);
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+  }
+  .dial{
+    width:58px;height:58px;flex:none;
+    border-radius:50%;
+    border:1px solid var(--panel-line);
+    background:radial-gradient(circle at 32% 28%, var(--panel-2), var(--panel) 72%);
+    display:grid;place-items:center;
+    position:relative;
+  }
+  .dial svg{width:30px;height:30px;color:var(--readout)}
+  .dial::after{
+    content:"";position:absolute;top:4px;left:50%;
+    width:2px;height:9px;border-radius:2px;
+    background:var(--readout);transform:translateX(-50%);
+  }
+  .panel-top .who{color:var(--panel-muted);margin:0 0 3px}
+  .prog{margin:0;font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.12}
+  .prog-note{margin:6px 0 0;color:var(--panel-muted);font-size:13.5px;font-weight:300}
+
+  .readouts{display:grid;grid-template-columns:repeat(3,1fr)}
+  .ro{padding:15px 14px;border-right:1px solid var(--panel-line)}
+  .ro:last-child{border-right:0}
+  .ro .k{color:var(--panel-muted);margin-bottom:4px;display:block}
+  .ro .v{
+    font-family:"Fira Sans Condensed",system-ui,sans-serif;
+    font-variant-numeric:tabular-nums;
+    font-size:27px;font-weight:600;line-height:1;
+    color:var(--readout);
+    display:flex;align-items:baseline;gap:3px;
+  }
+  .ro .v small{font-size:13px;font-weight:500;color:var(--panel-muted)}
+  .ro .v.text{font-size:19px;color:var(--panel-ink)}
+
+  .panel-foot{border-top:1px solid var(--panel-line);padding:15px 16px 17px;display:flex;flex-direction:column;gap:14px}
+  .drawer-row{display:flex;gap:13px;align-items:center}
+  .drawer-row svg{width:74px;height:44px;flex:none;color:var(--panel-muted)}
+  .drawer-row .txt{font-size:13.5px;color:var(--panel-muted);line-height:1.4}
+  .drawer-row .txt b{color:var(--panel-ink);font-weight:600}
+  .chips{display:flex;flex-wrap:wrap;gap:7px}
+  .chip{
+    font-family:"Fira Sans Condensed",system-ui,sans-serif;
+    text-transform:uppercase;letter-spacing:.08em;font-size:11.5px;font-weight:500;
+    padding:4px 9px;border-radius:20px;
+    border:1px solid var(--panel-line);color:var(--panel-muted);
+  }
+  .chip.on{border-color:var(--readout);color:var(--readout)}
+
+  .tips{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:9px}
+  .tips li{
+    display:flex;gap:10px;font-size:14px;color:var(--ink-2);line-height:1.45;
+    background:var(--surface);border:1px solid var(--line-soft);
+    border-radius:11px;padding:11px 13px;
+  }
+  .tips li::before{
+    content:"";flex:none;width:3px;border-radius:3px;background:var(--accent);align-self:stretch;
+  }
+  .tips li.warn::before{background:var(--heat)}
+
+  .again{
+    margin-top:16px;
+    display:inline-flex;align-items:center;gap:7px;
+    font:inherit;font-size:14px;font-weight:500;
+    background:none;border:1px solid var(--line);border-radius:22px;
+    color:var(--ink);padding:8px 15px;cursor:pointer;
+    transition:border-color .16s ease,color .16s ease;
+  }
+  .again:hover{border-color:var(--accent);color:var(--accent)}
+  .again:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .again svg{width:15px;height:15px}
+
+  /* ---- table ---- */
+  .all{margin-top:40px;border-top:1px solid var(--line);padding-top:22px}
+  .all summary{
+    cursor:pointer;list-style:none;
+    display:flex;align-items:center;gap:9px;
+    font-weight:600;font-size:15px;
+  }
+  .all summary::-webkit-details-marker{display:none}
+  .all summary .caret{transition:transform .18s ease;color:var(--accent);display:flex}
+  .all summary .caret svg{width:16px;height:16px}
+  .all[open] summary .caret{transform:rotate(90deg)}
+  .scroll{overflow-x:auto;margin-top:16px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+  table{border-collapse:collapse;width:100%;min-width:640px;font-size:13.5px}
+  th,td{padding:9px 11px;text-align:left;border-bottom:1px solid var(--line-soft);white-space:nowrap}
+  thead th{
+    font-family:"Fira Sans Condensed",system-ui,sans-serif;
+    text-transform:uppercase;letter-spacing:.09em;font-size:11.5px;font-weight:600;
+    color:var(--muted);background:var(--surface-2);position:sticky;top:0;
+  }
+  tbody tr:last-child td{border-bottom:0}
+  td.num{font-variant-numeric:tabular-nums;text-align:right}
+  td.prg{font-weight:600;white-space:normal;min-width:150px}
+  td.fab{white-space:normal;color:var(--muted);min-width:190px;font-weight:300}
+  .mark{display:inline-block;text-align:center;width:100%;color:var(--accent);font-size:15px}
+  .mark.no{color:var(--muted);opacity:.5}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;color:var(--muted);font-size:12.5px}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .legend b{color:var(--accent);font-size:14px}
+
+  footer{margin-top:30px;color:var(--muted);font-size:12.5px;line-height:1.55;font-weight:300}
+  footer p{margin:0 0 5px}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important;animation:none !important}
+  }
+  @media (max-width:420px){
+    .readouts{grid-template-columns:repeat(2,1fr)}
+    .ro:nth-child(2){border-right:0}
+    .ro:nth-child(3){border-top:1px solid var(--panel-line)}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="g-tee"><path d="M8.5 3 5 4.8 3 9l3 1.3V21h12V10.3L21 9l-2-4.2L15.5 3c0 1.8-1.6 2.7-3.5 2.7S8.5 4.8 8.5 3Z"/></g>
+    <g id="g-towels"><rect x="3" y="4" width="18" height="4.4" rx="1.6"/><rect x="3" y="10" width="18" height="4.4" rx="1.6"/><rect x="3" y="16" width="18" height="4.4" rx="1.6"/><path d="M7.5 6.2h3M7.5 12.2h3M7.5 18.2h3"/></g>
+    <g id="g-shirt"><path d="M8.5 3 5 4.8 3.4 9l2.6 1.1V21h12V10.1L20.6 9 19 4.8 15.5 3l-3.5 3-3.5-3Z"/><path d="M12 6.3V15"/></g>
+    <g id="g-jeans"><path d="M6.5 3h11l-.4 5.2L16 21h-3.2l-.8-9.5L11.2 21H8l-1.1-12.8L6.5 3Z"/><path d="M6.7 7.6h10.6"/></g>
+    <g id="g-shoe"><path d="M9 3v2.4a3 3 0 0 0 6 0V3l3.7 1.6L18 21H6L5.3 4.6 9 3Z"/><path d="M9.4 3.2c.3 1.4 1.3 2.2 2.6 2.2s2.3-.8 2.6-2.2"/></g>
+    <g id="g-wool"><circle cx="11.4" cy="11.6" r="8.2"/><path d="M11.4 3.4c-2.9 2.3-4.4 5.2-4.4 8.2s1.5 5.9 4.4 8.2M11.4 3.4c2.9 2.3 4.4 5.2 4.4 8.2s-1.5 5.9-4.4 8.2"/><path d="M3.6 9c2.3-1.5 5-2.3 7.8-2.3s5.5.8 7.8 2.3"/><path d="M17.6 17.8 21 21.2"/></g>
+    <g id="g-silk"><path d="M4 5.6c2.4-2 4.8-2 7.2 0s5 2 7.4 0"/><path d="M4 11c2.4-2 4.8-2 7.2 0s5 2 7.4 0"/><path d="M4 16.4c2.4-2 4.8-2 7.2 0s5 2 7.4 0"/></g>
+    <g id="g-shield"><path d="M12 2.8 4.6 5.6v6c0 4.2 3 8 7.4 9.6 4.4-1.6 7.4-5.4 7.4-9.6v-6L12 2.8Z"/><path d="M12 8.6v6.4M8.8 11.8h6.4"/></g>
+    <g id="g-clock"><circle cx="12" cy="13.2" r="7.8"/><path d="M12 9.2v4l2.6 1.8M9.4 3.2h5.2M12 3.2v2.2"/></g>
+    <g id="g-leaf"><path d="M20.2 3.4C10.6 3.4 4.4 8 4.4 14.2c0 3.4 2.3 6.2 5.6 6.2 6.1 0 10.2-5.8 10.2-17Z"/><path d="M10.2 20.2C11.4 13.6 14.6 8.2 19.4 4.4"/></g>
+    <g id="g-snow"><path d="M12 2.6v18.8M4 7.2l16 9.6M20 7.2 4 16.8"/><path d="M9.6 4.6 12 6.9l2.4-2.3M9.6 19.4 12 17.1l2.4 2.3"/></g>
+    <g id="g-spin"><path d="M20.4 12a8.4 8.4 0 1 1-2.6-6.1"/><path d="M20.6 4.4v5h-5"/><circle cx="12" cy="12" r="3.1"/></g>
+    <g id="g-caret"><path d="M9 5l7 7-7 7"/></g>
+    <g id="g-back"><path d="M11 6l-6 6 6 6M5 12h14"/></g>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow label"><span class="dot"></span>Πλυντήριο ρούχων · 5 kg</div>
+    <h1>Τι πρόγραμμα να βάλω;</h1>
+    <p class="sub">Διάλεξε τι έχεις στον κάδο. Θα σου πω ποιο πρόγραμμα να γυρίσεις, σε πόσους βαθμούς και τι στροφές.</p>
+  </header>
+
+  <section aria-labelledby="s1">
+    <div class="step"><span class="n">ΒΗΜΑ 1</span><h2 id="s1">Τι πλένεις;</h2></div>
+    <div class="grid" id="picker" role="group" aria-label="Είδος μπουγάδας"></div>
+  </section>
+
+  <section class="answer" id="answer" hidden aria-live="polite"></section>
+
+  <details class="all">
+    <summary><span class="caret"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><use href="#g-caret"/></svg></span>Όλα τα προγράμματα, όπως στο φυλλάδιο</summary>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Πρόγραμμα</th>
+            <th>Φορτίο</th>
+            <th>Εύρος °C</th>
+            <th>Προεπιλογή</th>
+            <th>Θήκη 1</th>
+            <th>Θήκη 2</th>
+            <th>Τύπος υφασμάτων</th>
+            <th>Στροφές</th>
+            <th>Καθυστ.</th>
+            <th>Θερμ.</th>
+            <th>Ταχύτ.</th>
+            <th>Ξέβγαλμα</th>
+          </tr>
+        </thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+    <div class="legend">
+      <span><b>●</b> Ναι</span>
+      <span><b>○</b> Προαιρετικά</span>
+      <span><b class="mark no">—</b> Όχι</span>
+      <span>* Το νερό δεν θερμαίνεται</span>
+    </div>
+  </details>
+
+  <footer>
+    <p>Θήκη <b>1</b>: απορρυπαντικό &nbsp;·&nbsp; Θήκη <b>2</b>: μαλακτικό ή προϊόν φροντίδας.</p>
+    <p>Τα 90°C μόνο για ειδικές απαιτήσεις υγιεινής. Στο Rapid 14 βάλε λιγότερο απορρυπαντικό, γιατί το πρόγραμμα είναι πολύ σύντομο.</p>
+  </footer>
+</div>
+
+<script>
+const PROGRAMS = {
+  eco:      {name:"Eco 40-60",              load:5.0, range:"—",      preset:"—",  d1:"yes", d2:"opt", fabric:"—",                                                        spin:"—",   fn:{delay:"opt", temp:"no",  speed:"no",  rinse:"no"}},
+  cot20:    {name:"Βαμβακερά 20°C",         load:5.0, range:"—",      preset:"—",  d1:"yes", d2:"opt", fabric:"Βαμβακερά",                                                spin:"1000",fn:{delay:"opt", temp:"no",  speed:"opt", rinse:"opt"}},
+  rapid:    {name:"Rapid 14",               load:1.5, range:"* έως 40",preset:"*", d1:"yes", d2:"opt", fabric:"Βαμβακερά / Συνθετικά",                                    spin:"1000",fn:{delay:"opt", temp:"opt", speed:"opt", rinse:"opt"}},
+  mixed:    {name:"Ανάμικτα και χρωματιστά",load:5.0, range:"* έως 60",preset:"30",d1:"yes", d2:"opt", fabric:"Ελαφρά λερωμένα ανάμικτα βαμβακερά και συνθετικά ρούχα",   spin:"1000",fn:{delay:"opt", temp:"opt", speed:"opt", rinse:"opt"}},
+  cotton:   {name:"Βαμβακερά",              load:5.0, range:"* έως 90",preset:"40",d1:"yes", d2:"opt", fabric:"Βαμβακερά",                                                spin:"1200",fn:{delay:"opt", temp:"opt", speed:"opt", rinse:"opt"}},
+  synth:    {name:"Συνθετικά",              load:5.0, range:"* έως 60",preset:"40",d1:"yes", d2:"opt", fabric:"Συνθετικά",                                                spin:"1200",fn:{delay:"opt", temp:"opt", speed:"opt", rinse:"opt"}},
+  delicate: {name:"Ευαίσθητα",              load:1.5, range:"* έως 30",preset:"30",d1:"yes", d2:"opt", fabric:"Ευαίσθητα ρούχα και μεταξωτά",                             spin:"600", fn:{delay:"opt", temp:"opt", speed:"opt", rinse:"opt"}},
+  sport:    {name:"Αθλητικά",               load:1.5, range:"* έως 40",preset:"20",d1:"yes", d2:"opt", fabric:"Βαμβακερά / Συνθετικά",                                    spin:"800", fn:{delay:"opt", temp:"opt", speed:"opt", rinse:"opt"}},
+  hand:     {name:"Στο Χέρι",               load:1.5, range:"* έως 40",preset:"*", d1:"yes", d2:"opt", fabric:"Ύφασμα μάλλινο ή που περιέχει μαλλί και μπορεί να πλυθεί στο πλυντήριο", spin:"800", fn:{delay:"opt", temp:"opt", speed:"opt", rinse:"opt"}},
+  hygiene:  {name:"Υγιεινή +",              load:5.0, range:"* έως 90",preset:"60",d1:"yes", d2:"opt", fabric:"Βαμβακερά",                                                spin:"1000",fn:{delay:"opt", temp:"opt", speed:"opt", rinse:"opt"}},
+  jeans:    {name:"Τζιν",                   load:5.0, range:"* έως 60",preset:"30",d1:"yes", d2:"opt", fabric:"Τζιν",                                                     spin:"1000",fn:{delay:"opt", temp:"opt", speed:"opt", rinse:"opt"}},
+  drain:    {name:"Αποστράγγιση + στύψιμο", load:5.0, range:"—",      preset:"—",  d1:"no",  d2:"opt", fabric:"Όλα τα υφάσματα",                                          spin:"1000",fn:{delay:"no",  temp:"no",  speed:"opt", rinse:"opt"}}
+};
+
+const CATEGORIES = [
+  { id:"mixed", icon:"g-tee", name:"Καθημερινή μπουγάδα",
+    ex:"Ανάμικτα χρωματιστά, ελαφρά λερωμένα",
+    prog:"mixed", temp:"30", tempNote:"προεπιλογή · έως 60",
+    tips:["Το πρόγραμμα είναι φτιαγμένο για ανάμικτα βαμβακερά και συνθετικά μαζί, όταν δεν είναι πολύ λερωμένα.",
+          "Αν η μπουγάδα είναι πιο βρόμικη, ανέβασε τη θερμοκρασία μέχρι 60°C."] },
+
+  { id:"whites", icon:"g-towels", name:"Λευκά, πετσέτες, σεντόνια",
+    ex:"Βαμβακερά που θέλουν δυνατή πλύση",
+    prog:"cotton", temp:"40", tempNote:"προεπιλογή · έως 90",
+    tips:["Οι 1200 στροφές είναι οι πιο δυνατές του πλυντηρίου — οι πετσέτες βγαίνουν πιο στεγνές.",
+          "Για λευκά που έχουν γκριζάρει, δούλεψε στους 60°C. Τους 90°C κράτα τους μόνο για ειδικές απαιτήσεις υγιεινής."] },
+
+  { id:"shirts", icon:"g-shirt", name:"Πουκάμισα & συνθετικά",
+    ex:"Πολυεστέρας, μπλούζες, φόρμες",
+    prog:"synth", temp:"40", tempNote:"προεπιλογή · έως 60",
+    tips:["Μη γεμίζεις τον κάδο τέρμα: τα συνθετικά τσαλακώνουν όταν στοιβάζονται.",
+          "Θέλεις λιγότερες τσακίσεις; Ρίξε τις στροφές από τις 1200 σε 800."] },
+
+  { id:"jeans", icon:"g-jeans", name:"Τζιν",
+    ex:"Παντελόνια, τζιν πουκάμισα, χοντρά βαμβακερά",
+    prog:"jeans", temp:"30", tempNote:"προεπιλογή · έως 60",
+    tips:["Γύρισέ τα από την ανάποδη πριν τα βάλεις — το χρώμα κρατάει περισσότερο στους 30°C.",
+          "Το τζιν είναι βαρύ όταν βρέχεται· μέχρι τρία παντελόνια μαζί."] },
+
+  { id:"sport", icon:"g-shoe", name:"Αθλητικά ρούχα",
+    ex:"Κολάν, τεχνικά υφάσματα, φόρμες γυμναστηρίου",
+    prog:"sport", temp:"20", tempNote:"προεπιλογή · έως 40",
+    tips:["Μικρό φορτίο: μέχρι 1,5 kg, δηλαδή ένα σετ γυμναστηρίου.",
+          "Οι 20°C προστατεύουν την ελαστικότητα των τεχνικών υφασμάτων. Για ιδρωμένα ρούχα, βάλε επιπλέον ξέβγαλμα."] },
+
+  { id:"wool", icon:"g-wool", name:"Μάλλινα & πλεκτά",
+    ex:"Πουλόβερ, κασκόλ, ό,τι γράφει «πλύσιμο στο χέρι»",
+    prog:"hand", temp:"*", tempNote:"χωρίς θέρμανση · έως 40",
+    tips:["Μόνο για μάλλινα που η ετικέτα τους επιτρέπει πλύσιμο στο πλυντήριο.",
+          "Το πρόγραμμα ξεκινά με κρύο νερό. Άφησέ το έτσι — η θερμοκρασία μαζεύει το μαλλί."] },
+
+  { id:"delicate", icon:"g-silk", name:"Ευαίσθητα & μεταξωτά",
+    ex:"Εσώρουχα, μπλούζες μετάξι, δαντέλες, κουρτίνες",
+    prog:"delicate", temp:"30", tempNote:"προεπιλογή · έως 30",
+    tips:["Οι 600 στροφές είναι το πιο μαλακό στύψιμο του πλυντηρίου.",
+          "Βάλε τα μικρά και τα εσώρουχα σε δίχτυ και μη ξεπερνάς το 1,5 kg."] },
+
+  { id:"hygiene", icon:"g-shield", name:"Απολύμανση",
+    ex:"Μωρουδιακά, ρούχα αρρώστου, αλλεργίες",
+    prog:"hygiene", temp:"60", tempNote:"προεπιλογή · έως 90",
+    tips:["Μόνο για βαμβακερά — τα συνθετικά δεν αντέχουν αυτές τις θερμοκρασίες.",
+          "Οι 90°C είναι αποκλειστικά για ειδικές απαιτήσεις υγιεινής, όχι για την καθημερινή μπουγάδα.",
+          "Πρόσθεσε επιπλέον ξέβγαλμα αν κάποιος στο σπίτι έχει ευαίσθητο δέρμα."] },
+
+  { id:"quick", icon:"g-clock", name:"Βιαστικό φρεσκάρισμα",
+    ex:"Λίγα ρούχα που φορέθηκαν μία φορά · 14 λεπτά",
+    prog:"rapid", temp:"*", tempNote:"χωρίς θέρμανση · έως 40",
+    tips:["Βάλε λιγότερο απορρυπαντικό: το πρόγραμμα είναι πολύ σύντομο και δεν προλαβαίνει να ξεπλυθεί όλο.",
+          "Μέχρι 1,5 kg και μόνο για ρούχα που δεν είναι πραγματικά λερωμένα."] },
+
+  { id:"eco", icon:"g-leaf", name:"Οικονομικό, γεμάτος κάδος",
+    ex:"Δεν βιάζομαι — το πιο λίγο ρεύμα και νερό",
+    prog:"eco", temp:"—", tempNote:"κλειδωμένη από το πρόγραμμα",
+    tips:["Θερμοκρασία και στροφές δεν ρυθμίζονται εδώ: το πρόγραμμα τα διαχειρίζεται μόνο του.",
+          "Είναι το πιο αποδοτικό πρόγραμμα, αλλά και το πιο αργό. Δούλεψέ το με γεμάτο κάδο (5 kg)."] },
+
+  { id:"cold", icon:"g-snow", name:"Κρύα πλύση 20°C",
+    ex:"Βαμβακερά ελαφρώς λερωμένα, ευαίσθητα χρώματα",
+    prog:"cot20", temp:"20", tempNote:"κλειδωμένη στους 20°C",
+    tips:["Τα χρώματα δεν ξεβάφουν και τα ρούχα δεν μπαίνουν.",
+          "Χρειάζεται απορρυπαντικό που δουλεύει σε χαμηλή θερμοκρασία."] },
+
+  { id:"drain", icon:"g-spin", name:"Μόνο στύψιμο ή άδειασμα",
+    ex:"Ξέχασα τη μπουγάδα βρεγμένη · λιμνάζει νερό",
+    prog:"drain", temp:"—", tempNote:"δεν πλένει, μόνο αδειάζει και στύβει",
+    tips:["Δεν μπαίνει απορρυπαντικό στη θήκη 1 — το πρόγραμμα δεν πλένει.",
+          "Δουλεύει με όλα τα υφάσματα. Για ευαίσθητα, ρίξε τις στροφές στις 600."] }
+];
+
+const MARK = { yes:'<span class="mark">●</span>', opt:'<span class="mark">○</span>', no:'<span class="mark no">—</span>' };
+const esc = s => String(s).replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const icon = (id, cls) => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="' + (cls||"") + '" aria-hidden="true"><use href="#' + id + '"/></svg>';
+
+/* ---- step 1 ---- */
+const picker = document.getElementById("picker");
+picker.innerHTML = CATEGORIES.map(c =>
+  '<button class="card" type="button" data-id="' + c.id + '" aria-pressed="false">' +
+    icon(c.icon) +
+    '<span class="name">' + esc(c.name) + '</span>' +
+    '<span class="ex">' + esc(c.ex) + '</span>' +
+  '</button>'
+).join("");
+
+/* ---- step 2 ---- */
+const answer = document.getElementById("answer");
+
+const DRAWER_SVG =
+  '<svg viewBox="0 0 74 44" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true">' +
+  '<path d="M3 12h68v26a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V12Z"/>' +
+  '<path d="M3 12 12 3h59l-3 9M37 12v29"/>' +
+  '<text x="19" y="30" font-size="13" font-family="Fira Sans Condensed, sans-serif" fill="currentColor" stroke="none">1</text>' +
+  '<text x="52" y="30" font-size="13" font-family="Fira Sans Condensed, sans-serif" fill="currentColor" stroke="none">2</text>' +
+  '</svg>';
+
+function render(cat, scroll){
+  const p = PROGRAMS[cat.prog];
+  const tempIsStar = cat.temp === "*";
+  const tempVal = tempIsStar ? '<span class="v text">Κρύο</span>'
+    : cat.temp === "—" ? '<span class="v text">Αυτόματη</span>'
+    : '<span class="v">' + cat.temp + '<small>°C</small></span>';
+
+  const fnChips = [
+    ["Καθυστέρηση", p.fn.delay],
+    ["Θερμοκρασία", p.fn.temp],
+    ["Ταχύτητα", p.fn.speed],
+    ["Επιπλέον ξέβγαλμα", p.fn.rinse]
+  ].map(([k, v]) =>
+    '<span class="chip' + (v === "no" ? '' : ' on') + '">' + k + (v === "no" ? " — όχι" : "") + '</span>'
+  ).join("");
+
+  const detergent = p.d1 === "yes"
+    ? '<b>Θήκη 1</b> απορρυπαντικό, <b>θήκη 2</b> μαλακτικό αν θέλεις.'
+    : 'Καμία θήκη δεν χρειάζεται — μόνο μαλακτικό στη <b>θήκη 2</b> αν κάνεις ξέβγαλμα.';
+
+  answer.innerHTML =
+    '<div class="step"><span class="n">ΒΗΜΑ 2</span><h2>Γύρισε τον διακόπτη εδώ</h2></div>' +
+    '<div class="panel">' +
+      '<div class="panel-top">' +
+        '<div class="dial">' + icon(cat.icon) + '</div>' +
+        '<div>' +
+          '<div class="who label">' + esc(cat.name) + '</div>' +
+          '<h3 class="prog">' + esc(p.name) + '</h3>' +
+          '<p class="prog-note">Για: ' + esc(p.fabric === "—" ? "όλα τα συνήθη υφάσματα" : p.fabric) + '</p>' +
+        '</div>' +
+      '</div>' +
+      '<div class="readouts">' +
+        '<div class="ro"><span class="k label">Θερμοκρασία</span>' + tempVal +
+          '<div class="prog-note" style="font-size:12px;margin-top:6px">' + esc(cat.tempNote) + '</div></div>' +
+        '<div class="ro"><span class="k label">Στύψιμο</span>' +
+          (p.spin === "—" ? '<span class="v text">Αυτόματο</span>' : '<span class="v">' + p.spin + '<small>σ.α.λ.</small></span>') +
+          '<div class="prog-note" style="font-size:12px;margin-top:6px">προεπιλογή</div></div>' +
+        '<div class="ro"><span class="k label">Μέγιστο φορτίο</span><span class="v">' +
+          p.load.toFixed(1).replace(".", ",") + '<small>kg</small></span>' +
+          '<div class="prog-note" style="font-size:12px;margin-top:6px">' +
+          (p.load === 5 ? "γεμάτος κάδος" : "περίπου το ⅓ του κάδου") + '</div></div>' +
+      '</div>' +
+      '<div class="panel-foot">' +
+        '<div class="drawer-row">' + DRAWER_SVG + '<div class="txt">' + detergent + '</div></div>' +
+        '<div><div class="who label" style="color:var(--panel-muted);margin-bottom:7px">Λειτουργίες που μπορείς να προσθέσεις</div>' +
+        '<div class="chips">' + fnChips + '</div></div>' +
+      '</div>' +
+    '</div>' +
+    '<ul class="tips">' + cat.tips.map((t, i) =>
+      '<li' + (/90°C|λιγότερο απορρυπαντικό|ετικέτα/.test(t) ? ' class="warn"' : '') + '><span>' + esc(t) + '</span></li>'
+    ).join("") + '</ul>' +
+    '<button class="again" type="button" id="reset">' +
+      icon("g-back") + 'Άλλη μπουγάδα' +
+    '</button>';
+
+  answer.hidden = false;
+  document.getElementById("reset").addEventListener("click", () => {
+    answer.hidden = true;
+    answer.innerHTML = "";
+    picker.querySelectorAll(".card").forEach(b => b.setAttribute("aria-pressed", "false"));
+    history.replaceState(null, "", location.pathname + location.search);
+    picker.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+  if (scroll) answer.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function select(id, scroll){
+  const cat = CATEGORIES.find(c => c.id === id);
+  if (!cat) return;
+  picker.querySelectorAll(".card").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.id === id)));
+  render(cat, scroll);
+}
+
+picker.addEventListener("click", e => {
+  const btn = e.target.closest(".card");
+  if (!btn) return;
+  history.replaceState(null, "", "#" + btn.dataset.id);
+  select(btn.dataset.id, true);
+});
+
+if (location.hash.length > 1) select(decodeURIComponent(location.hash.slice(1)), false);
+
+/* ---- full table ---- */
+document.getElementById("tbody").innerHTML = Object.values(PROGRAMS).map(p =>
+  "<tr>" +
+    '<td class="prg">' + esc(p.name) + "</td>" +
+    '<td class="num">' + p.load.toFixed(1).replace(".", ",") + " kg</td>" +
+    "<td>" + esc(p.range) + "</td>" +
+    '<td class="num">' + esc(p.preset) + (/^\d+$/.test(p.preset) ? " °C" : "") + "</td>" +
+    "<td>" + MARK[p.d1] + "</td>" +
+    "<td>" + MARK[p.d2] + "</td>" +
+    '<td class="fab">' + esc(p.fabric) + "</td>" +
+    '<td class="num">' + esc(p.spin) + "</td>" +
+    "<td>" + MARK[p.fn.delay] + "</td>" +
+    "<td>" + MARK[p.fn.temp] + "</td>" +
+    "<td>" + MARK[p.fn.speed] + "</td>" +
+    "<td>" + MARK[p.fn.rinse] + "</td>" +
+  "</tr>"
+).join("");
+</script>
+</body>
+</html>
