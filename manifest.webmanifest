@@ -1,0 +1,40 @@
+{
+  "name": "Τι πρόγραμμα να βάλω;",
+  "short_name": "Πλύση",
+  "description": "Διάλεξε τι πλένεις και δες ποιο πρόγραμμα, θερμοκρασία και στροφές να βάλεις στο πλυντήριο.",
+  "lang": "el",
+  "dir": "ltr",
+  "id": "/washprograms/",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#EFF1F0",
+  "theme_color": "#0A7C89",
+  "categories": ["utilities", "lifestyle"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Καθημερινή μπουγάδα",
+      "short_name": "Καθημερινά",
+      "url": "./index.html#mixed",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Λευκά, πετσέτες, σεντόνια",
+      "short_name": "Λευκά",
+      "url": "./index.html#whites",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    },
+    {
+      "name": "Βιαστικό φρεσκάρισμα",
+      "short_name": "Rapid 14",
+      "url": "./index.html#quick",
+      "icons": [{ "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" }]
+    }
+  ]
+}
