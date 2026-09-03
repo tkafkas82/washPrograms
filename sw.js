@@ -1,7 +1,7 @@
 /* Service worker: the app is fully static, so it is offline-first.
    Bump CACHE whenever the shell changes — the old cache is dropped on activate. */
 
-const CACHE = "washprograms-v1";
+const CACHE = "washprograms-v2";
 
 /* The app must not load offline without these: */
 const CORE = [

@@ -4,7 +4,6 @@
   "description": "Διάλεξε τι πλένεις και δες ποιο πρόγραμμα, θερμοκρασία και στροφές να βάλεις στο πλυντήριο.",
   "lang": "el",
   "dir": "ltr",
-  "id": "/washprograms/",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
